@@ -14,8 +14,8 @@ if [ "${retains}" -le 0 ]; then
     clean_command=":"
 fi
 
-
-echo "${schedule} date ; ${backup_command} && ${clean_command}" >> /var/spool/cron/crontabs/root
-
+if [ `grep -c " date ; fname=" /var/spool/cron/crontabs/root` -eq '0' ];then
+    echo "${schedule} date ; ${backup_command} && ${clean_command}" >> /var/spool/cron/crontabs/root
+fi
 
 exec crond -f -L /dev/stdout
